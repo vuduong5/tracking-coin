@@ -3,11 +3,43 @@ const Exchanges = require('./enum')
 const exchangeService = require('./services/exchangeService')
 const priceService = require('./services/priceService')
 const telegramService = require('./services/telegramService')
+const WebSocketService = require('./client');
 const stringBuilder = require('./stringbuilder');
 const dummyData = require('./dummy/contractDetail')
 const axios = require('axios');
 const app = express();
 const port = 3000;
+
+const WebSocket = require('ws');
+// Create a WebSocket server on port 8080
+const server = new WebSocket.Server({ port: 8080 });
+
+server.on('connection', (socket) => {
+  console.log('Client connected');
+
+  // Send a message to the client
+  socket.send('Hello from server!');
+
+  // Listen for messages from the client
+  socket.on('message', async (message) => {
+    console.log(`Received message from Client: ${message}`);
+    if(message == 'run'){
+        console.time("Execution Time");
+        const contracts = await getContractDetails();
+        console.timeEnd("Execution Time");
+        wsClient.sendMessage('run')
+    }
+  });
+
+  // Handle client disconnection
+  socket.on('close', () => {
+    console.log('Client disconnected');
+  });
+});
+
+const wsClient = new WebSocketService('ws://localhost:8080');
+// Connect to the WebSocket server
+wsClient.connect();
 
 // Function to get contract details from MEXC
 async function getContractDetails() {
@@ -19,8 +51,8 @@ async function getContractDetails() {
         const results = formatContracts(contracts);
 
         //const filterd = results.filter(s => s.exchanges.indexOf(Exchanges.GATEIO) != -1);
-        //const filterd = results.filter(s => s.symbol == 'CTK_USDT');
-        const filterd = results.filter(s => s != null);
+        const filterd = results.filter(s => s.symbol == 'ALCX_USDT');
+        //const filterd = results.filter(s => s != null);
 
         const rawData = await runInterval(filterd.slice());
         
@@ -81,15 +113,30 @@ function delay(ms) {
 }
 
 // Route to handle the index page
-app.get('/start', async (req, res) => {
-    console.time("Execution Time");
-    const contracts = await getContractDetails();
-    console.timeEnd("Execution Time");
-    res.json(contracts); // Send the formatted contract list as a JSON response
-});
+// app.get('/start', async (req, res) => {
+//     console.time("Execution Time");
+//     const contracts = await getContractDetails();
+//     console.timeEnd("Execution Time");
+//     res.json(contracts); // Send the formatted contract list as a JSON response
+// });
 
 app.get('/', async (req, res) => {
     res.json({'status': 'pingo'})
+});
+
+app.get('/start', async (req, res) => {
+    wsClient.sendMessage("run");
+    res.json("Pingo!!!!!!!!!!!");
+});
+
+app.get('/stop', async (req, res) => {
+    wsClient.disconnect();
+    res.json("Disconnect!!!!!!!!!!!");
+});
+
+app.get('/reconnect', async (req, res) => {
+    wsClient.connect();
+    res.json("Reconnect!!!!!!!!!!!");
 });
 
 // Start the Express server
