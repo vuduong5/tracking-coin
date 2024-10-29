@@ -51,8 +51,8 @@ async function getContractDetails() {
         const results = formatContracts(contracts);
 
         //const filterd = results.filter(s => s.exchanges.indexOf(Exchanges.GATEIO) != -1);
-        const filterd = results.filter(s => s.symbol == 'ALCX_USDT');
-        //const filterd = results.filter(s => s != null);
+        //const filterd = results.filter(s => s.symbol == 'ALCX_USDT');
+        const filterd = results.filter(s => s != null);
 
         const rawData = await runInterval(filterd.slice());
         
