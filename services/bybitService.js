@@ -28,7 +28,7 @@ class BybitService{
             symbol: symbol,
             lastPrice: this.toDecimal(detail.lastPrice),
             volume24: this.toDecimal(detail.volume24h),
-            fundingRate: this.toDecimal(detail.fundingRate),
+            fundingRate: this.toDecimal(detail.fundingRate) * 100,
             timestamp: this.toDecimal(timestamp),
             dateFormat: dateHelper.convertTimestampToDateTime(timestamp),
             exchange: Exchanges.BYBIT

@@ -16,6 +16,19 @@ function convertTimestampToDateTime(timestamp) {
     return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
 }
 
+function convertTimestampToTime(timestamp) {
+    // Convert timestamp directly (since it includes milliseconds)
+     const date = new Date(parseFloat(timestamp));
+ 
+     // Extract time parts
+     const hours = String(date.getHours()).padStart(2, '0');
+     const minutes = String(date.getMinutes()).padStart(2, '0');
+     const seconds = String(date.getSeconds()).padStart(2, '0');
+ 
+     // Return formatted datetime string
+     return `${hours}:${minutes}:${seconds}`;
+ }
+
 function isToday(timestamp) {
     // Convert timestamp to a Date object
     const date = new Date(timestamp);
@@ -32,5 +45,6 @@ function isToday(timestamp) {
 
 module.exports = {
     convertTimestampToDateTime,
+    convertTimestampToTime,
     isToday
 }

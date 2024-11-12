@@ -54,7 +54,7 @@ class KucoinService{
             symbol: symbol,
             lastPrice: '',
             volume24: this.toDecimal(detail.volumeOf24h),
-            fundingRate: this.toDecimal(detail.fundingFeeRate),
+            fundingRate: this.toDecimal(detail.fundingFeeRate) * 100,
             timestamp: '',
             dateFormat: '',
             exchange: Exchanges.KUCOIN

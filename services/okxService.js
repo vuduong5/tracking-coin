@@ -31,7 +31,7 @@ class OKXService{
             const response = await axios.get(`https://www.okx.com/api/v5/public/funding-rate?instId=${symbol.replaceAll('_', '-')}-SWAP`);
             const data = response.data.data[0];
 
-            let funcdingRate = data ? this.toDecimal(data.fundingRate) : 0;
+            let funcdingRate = data ? this.toDecimal(data.fundingRate) * 100 : 0;
             
             detail.fundingRate = funcdingRate;
             

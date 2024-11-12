@@ -52,6 +52,23 @@ function checkPriceDifferences(coinName, data, threshold = 5) {
     }
     
 }
+
+function getDifferencePercent(price2, price1){
+     // Find the contract with the minimum lastPrice for the given coinName
+
+    const difference = Math.abs((price1 - price2) / price1) * 100;
+    return difference.toFixed(2);
+}
+
+function getDifference(price2, price1){
+    // Find the contract with the minimum lastPrice for the given coinName
+
+   const difference = price1 - price2;
+   return difference;
+}
+
 module.exports = {
-    checkPriceDifferences
+    checkPriceDifferences,
+    getDifferencePercent,
+    getDifference
 }

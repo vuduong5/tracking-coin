@@ -45,7 +45,7 @@ class GateService{
             symbol: detail.contract,
             lastPrice: this.toDecimal(detail.last),
             volume24: this.toDecimal(detail.volume_24h),
-            fundingRate: this.toDecimal(detail.funding_rate),
+            fundingRate: this.toDecimal(detail.funding_rate) * 100,
             timestamp: '',
             dateFormat: '',
             exchange: Exchanges.GATEIO

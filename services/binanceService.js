@@ -31,7 +31,7 @@ class BinanceService{
             const response = await axios.get(`https://fapi.binance.com/fapi/v1/fundingRate?symbol=${symbol.replaceAll('_', '')}&&limit=1`);
             const data = response.data[0];
 
-            let funcdingRate = data ? this.toDecimal(data.fundingRate) : 0;
+            let funcdingRate = data ? this.toDecimal(data.fundingRate) * 100 : 0;
             
             detail.fundingRate = funcdingRate;
             

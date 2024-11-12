@@ -113,12 +113,12 @@ function delay(ms) {
 }
 
 // Route to handle the index page
-// app.get('/start', async (req, res) => {
-//     console.time("Execution Time");
-//     const contracts = await getContractDetails();
-//     console.timeEnd("Execution Time");
-//     res.json(contracts); // Send the formatted contract list as a JSON response
-// });
+app.get('/test', async (req, res) => {
+console.time("Execution Time");
+const contracts = await getContractDetails();
+console.timeEnd("Execution Time");
+res.json(contracts); // Send the formatted contract list as a JSON response
+});
 
 app.get('/', async (req, res) => {
     res.json({'status': 'pingo'})

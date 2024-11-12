@@ -22,7 +22,7 @@ class MexcService{
             symbol: detail.symbol,
             lastPrice: detail.lastPrice,
             volume24: detail.volume24,
-            fundingRate: detail.fundingRate,
+            fundingRate: detail.fundingRate * 100,
             timestamp: detail.timestamp,
             dateFormat: dateHelper.convertTimestampToDateTime(detail.timestamp),
             exchange: Exchanges.MEXC
